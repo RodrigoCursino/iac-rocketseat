@@ -1,0 +1,3 @@
+1 - Criar o arquivo providers.tf dentro da pasta
+2 - Logar na aws cli, com o comando: "aws sso login --profile=<seu-profile>"
+3 - Rodar o comando terraform init
