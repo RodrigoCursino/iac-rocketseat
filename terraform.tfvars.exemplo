@@ -1,0 +1,5 @@
+ami                    = ""
+name                   = ""
+availability_zone_um   = ""
+availability_zone_dois = ""
+port                   = 80

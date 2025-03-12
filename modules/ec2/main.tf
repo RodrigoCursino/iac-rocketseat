@@ -1,18 +1,21 @@
 resource "aws_instance" "desafio_instance_web_um" {
+  
   ami             = var.ami
   subnet_id       = var.subnet_id_um
-  instance_type   = "t2.micro"
+  instance_type   = "t3.micro"
   security_groups = [var.security_group_id]
 
   user_data = <<-EOF
   #!/bin/bash
   sudo yum update -y
-  sudo yum install -y httpd
-  sudo systemctl start httpd
-  sudo systemctl enable httpd
-  echo "<h1>Hello, World from EC2 with Terraform, Melissa!</h1>" | sudo tee /var/www/html/index.html
+  sudo yum install docker -y
+  sudo usermod -aG docker $USER
+  newgrp docker
+  sudo chmod 666 /var/run/docker.sock
+  sudo systemctl enable docker .service
+  sudo systemctl start docker .service
+  docker run -d -p 80:80 nginx
   EOF
-
 
   tags = {
     Name = "${var.name}-web-um-iac-${terraform.workspace}"
@@ -23,16 +26,19 @@ resource "aws_instance" "desafio_instance_web_um" {
 resource "aws_instance" "desafio_instance_web_dois" {
   ami             = var.ami
   subnet_id       = var.subnet_id_dois
-  instance_type   = "t2.micro"
+  instance_type   = "t3.micro"
   security_groups = [var.security_group_id]
 
   user_data = <<-EOF
   #!/bin/bash
   sudo yum update -y
-  sudo yum install -y httpd
-  sudo systemctl start httpd
-  suco systemctl enable httpd
-  echo "<h1>Hello, World from EC2 with Terraform, Manu!</h1>" | sudo tee /var/www/html/index.html
+  sudo yum install docker -y
+  sudo usermod -aG docker $USER
+  newgrp docker
+  sudo chmod 666 /var/run/docker.sock
+  sudo systemctl enable docker .service
+  sudo systemctl start docker .service
+  docker run -d -p 80:80 nginx
   EOF
 
   tags = {
